@@ -7,10 +7,15 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 
 
+def get_url(count=200):
+    return {f"http://localhost:8000/{id}" for id in range(200)}
+
+
 class MySpider(scrapy.Spider):
     name = "local"
-    start_urls = [f"http://localhost:8000/{id}" for id in range(200)]
+    start_urls = get_url()
     crawled_count = 0
+    max_request = 200
 
     def parse(self, response):
         for person in response.css("table tr"):
@@ -24,18 +29,17 @@ class MySpider(scrapy.Spider):
                 return
 
 
-def profiler():
+def profiler(request_count=200, concurrent_request=20):
     start_time = time.time()
 
     my_settings = Settings()
-    my_settings.set("CONCURRENT_REQUESTS", 20)
+    my_settings.set("CONCURRENT_REQUESTS", concurrent_request)
+    my_settings.set("LOG_LEVEL", "ERROR")
+    my_settings.set("LOG_ENABLED", True)
 
     process = CrawlerProcess(settings=my_settings)
     process.crawl(MySpider)
     process.start()
-
     end_time = time.time()
     mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    print(f"Time taken: {end_time - start_time} seconds")
-    print(f"Memory used: {mem_usage} kilobytes")
     return end_time - start_time, mem_usage
