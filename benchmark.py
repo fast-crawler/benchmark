@@ -6,12 +6,12 @@ from _fastcrawler import profiler as fast_profiler
 
 
 def benchmark():
-    request_counts = [10, 20, 100]
+    request_counts = [10, 20, 100, 200, 300, 400]
     data = []
 
     for request_count in request_counts:
-        scrapy_time, scrapy_memory = scrapy_profiler(request_count)
-        fast_time, fast_memory = 100, 100
+        scrapy_time, scrapy_memory = scrapy_profiler()
+        fast_time, fast_memory = fast_profiler()
         data.append(
             {
                 "RequestCount": request_count,
@@ -45,7 +45,6 @@ def benchmark():
     ax1.set_ylabel("Time (seconds)")
     ax1.set_title("Response Time vs. Request Count")
     ax1.legend()
-    ax1.grid(True)
 
     ax2.bar(index, scrapy_memories, bar_width, label="scrapy")
     ax2.bar([i + bar_width for i in index], fast_memories, bar_width, label="fast")
@@ -55,7 +54,6 @@ def benchmark():
     ax2.set_ylabel("Memory Usage (kilobytes)")
     ax2.set_title("Memory Usage vs. Request Count")
     ax2.legend()
-    ax2.grid(True)
 
     plt.tight_layout()
 
