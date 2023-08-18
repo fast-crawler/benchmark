@@ -1,0 +1,9 @@
+Scrapy==2.10.0
+pandas==2.0.3
+fastcrawler @ git+https://github.com/fast-crawler/fastcrawler.git@bug/core
+redbird @ git+https://github.com/ManiMozaffar/red-bird@v2_but_v1
+rocketry @ git+https://github.com/ManiMozaffar/rocketry@master
+aiohttp==3.8.5
+fastapi==0.101.1
+Faker==19.3.0
+uvicorn==0.23.2
