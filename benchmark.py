@@ -10,8 +10,8 @@ def benchmark():
     data = []
 
     for request_count in request_counts:
-        scrapy_time, scrapy_memory = scrapy_profiler()
-        fast_time, fast_memory = fast_profiler()
+        scrapy_time, scrapy_memory = scrapy_profiler(request_count)
+        fast_time, fast_memory = fast_profiler(request_count)
         data.append(
             {
                 "RequestCount": request_count,
