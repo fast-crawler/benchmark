@@ -165,5 +165,3 @@ class Product(BaseDataclass):
     store: Store = 'NOTSET'
     description: str = 'NOTSET'
     others: Mapping[Any, Any] = 'NOTSET'
-
-
