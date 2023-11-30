@@ -1,7 +1,6 @@
 from scrapy import Request
 from products.spiders import Spider
 import json
-from bs4 import BeautifulSoup
 from datetime import date, timedelta
 
 
