@@ -1,5 +1,5 @@
 from scrapy import Request
-from scrapy import Spider
+from products.spiders import Spider
 import json
 from bs4 import BeautifulSoup
 from datetime import date, timedelta
@@ -7,7 +7,27 @@ from datetime import date, timedelta
 
 class MoponCoupon(Spider):
     name = 'mopon'
-
+    
+    custom_settings = {
+        'DOWNLOAD_TIMEOUT': 20,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 75,
+        'RETRY_TIMES': 10,
+        'DOWNLOADER_MIDDLEWARES_BASE': {
+            'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware': 350,
+            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 500,
+            # 'core.middlewares.proxy.ProxyMiddleware': 510,
+            'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 520,
+            'scrapy.downloadermiddlewares.retry.RetryMiddleware': 550,
+            'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 590,
+            'scrapy.downloadermiddlewares.redirect.RedirectMiddleware': 600,
+            'scrapy.downloadermiddlewares.stats.DownloaderStats': 850,
+        },
+        'SCHEDULER_MEMORY_QUEUE': 'scrapy.squeues.LifoMemoryQueue',
+        'SPIDER_MIDDLEWARES': {
+            # 'core.middlewares.spidermiddlewares.NotJsonMiddleware': 1
+        }
+    }
+    
     def __init__(self, name=None, **kwargs):
         super().__init__(name=name, **kwargs)
 
