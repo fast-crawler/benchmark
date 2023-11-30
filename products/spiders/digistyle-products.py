@@ -52,7 +52,6 @@ class DigistyleProducts(Spider):
     def parse(self, response, **kwargs):
         categories = response.css('a.c-mega-menu__link.c-mega-menu__link.js-mega-menu-ga-trigger::attr(href)').getall()
         for category in categories:
-            # print(category)
             yield self.get_category_request(category)
 
 
@@ -74,7 +73,6 @@ class DigistyleProducts(Spider):
                 item.images = image_list
                 item.category = str(product['site_category'][-1])
                 item.url = self.generate_product_url(url=product['product_url'], product_id=item.id)
-                print('this is the item', item)
                 yield item
 
             if products:
