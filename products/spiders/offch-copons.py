@@ -25,7 +25,7 @@ class OffchCoupon(Spider):
             # 'core.middlewares.spidermiddlewares.NotJsonMiddleware': 1
         }
     }
-    start_urls = ['https://api.offch.com/api/coupons?category=1&limit=10&format=json']
+    start_urls = ['https://api.offch.com/api/coupons?category=1&limit=1000&format=json']
 
     def parse(self, response, **kwargs):
         response = response.json()
